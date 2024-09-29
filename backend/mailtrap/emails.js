@@ -23,7 +23,7 @@ module.exports.sendVerificationEmail = async (email, verificationToken) => {
 	}
 };
 
-module.exports.sendWelcomeEmail = async (email, name)=>{
+module.exports.sendWelcomeEmail = async (email, firstName)=>{
   const recipient = [{ email }];
 
 	try {
@@ -32,8 +32,9 @@ module.exports.sendWelcomeEmail = async (email, name)=>{
 			to: recipient,
 			template_uuid: "40e49ed6-144e-4f9d-9854-5a72ea71d5f6",
 			template_variables: {
-				"name": "LinkedIn Clone",
-        "company_info_name": "Test_Company_info_name",
+				// company_info_name: "LinkedinColne Company",
+				name: firstName,
+        "company_info_name": "LinkedIn Clone",
         "company_info_address": "Test_Company_info_address",
         "company_info_city": "Test_Company_info_city",
         "company_info_zip_code": "Test_Company_info_zip_code",
