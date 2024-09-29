@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const {User} = require("../models/user.model");
 const { generateverificationToken } = require("../utlis/generateverificationToken");
 const { generateTokenAndSetCookie } = require("../utlis/generateTokenAndSetCookie");
+const { sendVerificationEmail } = require("../mailtrap/emails");
 
 module.exports.signup = async (req,res)=>{
   const { email, password, firstName, lastName } = req.body;
@@ -19,7 +20,7 @@ module.exports.signup = async (req,res)=>{
 		}
 
 		const hashedPassword = await bcryptjs.hash(password, 10);
-    const verificationToken = generateverificationToken;
+    const verificationToken = generateverificationToken();
 
 		const user = new User({
 			email,
@@ -35,7 +36,7 @@ module.exports.signup = async (req,res)=>{
     // jwt
 		generateTokenAndSetCookie(res, user._id);
 
-		// await sendVerificationEmail(user.email, verificationToken);
+		await sendVerificationEmail(user.email, verificationToken);
 
 		res.status(201).json({
 			success: true,

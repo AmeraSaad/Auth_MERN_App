@@ -1,3 +1,6 @@
+const  {VERIFICATION_EMAIL_TEMPLATE}= require("./emailTempletes") ;
+const { mailtrapClient } = require("./mailtrap.config");
+const { sender } = require("./mailtrap.config");
 
 
 module.exports.sendVerificationEmail = async (email, verificationToken) => {
