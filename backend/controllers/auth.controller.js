@@ -9,9 +9,9 @@ const { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail,
   const {User} = require("../models/user.model");
 
 module.exports.signup = async (req,res)=>{
-  const { email, password, firstName, lastName } = req.body;
+  const { email, password, name } = req.body;
   try{
-    if (!email || !password || !firstName || !lastName) {
+    if (!email || !password || !name) {
 			throw new Error("All fields are required");
 		}
     const userAlreadyExists = await User.findOne({ email });
@@ -27,8 +27,7 @@ module.exports.signup = async (req,res)=>{
 		const user = new User({
 			email,
 			password: hashedPassword,
-			firstName,
-      lastName,
+			name,
 			verificationToken,
 			verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
 		});
@@ -39,7 +38,7 @@ module.exports.signup = async (req,res)=>{
 		generateTokenAndSetCookie(res, user._id);
     
     //send verification token "email"
-		await sendVerificationEmail(user.email, verificationToken);
+		// await sendVerificationEmail(user.email, verificationToken);
 
 		res.status(201).json({
 			success: true,
@@ -74,7 +73,7 @@ module.exports.verifyEmail = async (req, res) => {
 
     // const profileUrl = process.env.CLIENT_URL + "/profile/" + user.username;
 
-		await sendWelcomeEmail(user.email, user.firstName); //profileUrl
+		await sendWelcomeEmail(user.email, user.name); //profileUrl
 
 		res.status(200).json({
 			success: true,

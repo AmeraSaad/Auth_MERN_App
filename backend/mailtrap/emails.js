@@ -26,7 +26,7 @@ module.exports.sendVerificationEmail = async (email, verificationToken) => {
 };
 
 // Send Welcome Email using createWelcomeEmailTemplate
-module.exports.sendWelcomeEmail = async (email, firstName) => { //profileUrl
+module.exports.sendWelcomeEmail = async (email, name) => { //profileUrl
 	const recipient = [{ email }];
 
 	try {
@@ -34,7 +34,7 @@ module.exports.sendWelcomeEmail = async (email, firstName) => { //profileUrl
 			from: sender,
 			to: recipient,
 			subject: "Welcome to UnLinked!",
-			html: createWelcomeEmailTemplate(firstName),  //profileUrl
+			html: createWelcomeEmailTemplate(name),  //profileUrl
 			category: "Welcome Email",
 		});
 		console.log("Welcome email sent successfully", response);
