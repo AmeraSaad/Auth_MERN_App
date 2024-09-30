@@ -1,4 +1,6 @@
-const  {VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE}= require("./emailTempletes") ;
+const  {VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE,
+  createWelcomeEmailTemplate
+}= require("./emailTempletes") ;
 const { mailtrapClient } = require("./mailtrap.config");
 const { sender } = require("./mailtrap.config");
 
@@ -23,29 +25,21 @@ module.exports.sendVerificationEmail = async (email, verificationToken) => {
 	}
 };
 
-module.exports.sendWelcomeEmail = async (email, firstName)=>{
-  const recipient = [{ email }];
+// Send Welcome Email using createWelcomeEmailTemplate
+module.exports.sendWelcomeEmail = async (email, firstName) => { //profileUrl
+	const recipient = [{ email }];
 
 	try {
 		const response = await mailtrapClient.send({
 			from: sender,
 			to: recipient,
-			template_uuid: "40e49ed6-144e-4f9d-9854-5a72ea71d5f6",
-			template_variables: {
-				// company_info_name: "LinkedinColne Company",
-				name: firstName,
-        "company_info_name": "LinkedIn Clone",
-        "company_info_address": "Test_Company_info_address",
-        "company_info_city": "Test_Company_info_city",
-        "company_info_zip_code": "Test_Company_info_zip_code",
-        "company_info_country": "Test_Company_info_country"
-			},
+			subject: "Welcome to UnLinked!",
+			html: createWelcomeEmailTemplate(firstName),  //profileUrl
+			category: "Welcome Email",
 		});
-
 		console.log("Welcome email sent successfully", response);
 	} catch (error) {
 		console.error(`Error sending welcome email`, error);
-
 		throw new Error(`Error sending welcome email: ${error}`);
 	}
 };

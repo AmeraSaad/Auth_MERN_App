@@ -72,7 +72,9 @@ module.exports.verifyEmail = async (req, res) => {
 		user.verificationTokenExpiresAt = undefined;
 		await user.save();
 
-		await sendWelcomeEmail(user.email, user.firstName);
+    // const profileUrl = process.env.CLIENT_URL + "/profile/" + user.username;
+
+		await sendWelcomeEmail(user.email, user.firstName); //profileUrl
 
 		res.status(200).json({
 			success: true,
