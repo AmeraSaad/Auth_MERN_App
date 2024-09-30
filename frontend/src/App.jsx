@@ -3,7 +3,7 @@ import FloatingShape from "./components/FloatingShape";
 
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
-// import EmailVerificationPage from "./pages/EmailVerificationPage";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 // import DashboardPage from "./pages/DashboardPage";
 // import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 // import ResetPasswordPage from "./pages/ResetPasswordPage";
@@ -28,6 +28,7 @@ function App() {
         <Route exact path="/" element={"Home"} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/verify-email" element={<EmailVerificationPage />} />
       </Routes>
     </div>
   )
